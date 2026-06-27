@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CIOS · SGPBL Impact Assessment · IEEE Research</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white:      #FFFFFF;
+  --off-white:  #F7F9F4;
+  --surface:    #F0F4EC;
+  --border:     #D8E4CF;
+  --border-dk:  #B8CCAA;
+  --green:      #2D6A10;
+  --green-md:   #3E8A1A;
+  --green-lt:   #EAF3DE;
+  --green-xlt:  #F3F9EE;
+  --orange:     #C96B00;
+  --orange-lt:  #FFF3E0;
+  --blue:       #1A5C9A;
+  --blue-lt:    #E8F2FB;
+  --teal:       #0A7A5C;
+  --teal-lt:    #E0F5EE;
+  --gold:       #8A6000;
+  --gold-lt:    #FEF8E6;
+  --text:       #1A1A1A;
+  --text-md:    #3D3D3D;
+  --muted:      #6B7B6B;
+  --muted-lt:   #8E9E8E;
+  --shadow-sm:  0 1px 4px rgba(0,0,0,.07), 0 2px 8px rgba(0,0,0,.05);
+  --shadow-md:  0 4px 16px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.05);
+  --shadow-lg:  0 8px 32px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--white);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .9rem 3rem;
+  background: rgba(255,255,255,.93);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 8px rgba(0,0,0,.06);
+}
+.nav-brand {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.05rem; font-weight: 700;
+  color: var(--text); letter-spacing: .02em;
+}
+.nav-brand span { color: var(--green-md); }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  font-size: .85rem; font-weight: 500;
+  color: var(--muted); text-decoration: none;
+  transition: color .18s;
+}
+.nav-links a:hover { color: var(--green); }
+.nav-cta {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: .85rem; font-weight: 600;
+  padding: .5rem 1.25rem;
+  background: var(--green);
+  color: #fff; border: none; border-radius: 5px;
+  text-decoration: none; cursor: pointer;
+  transition: background .18s, transform .15s;
+}
+.nav-cta:hover { background: var(--green-md); transform: translateY(-1px); }
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 8rem 3rem 6rem;
+  background: linear-gradient(160deg, var(--white) 0%, var(--green-xlt) 50%, var(--off-white) 100%);
+  position: relative; overflow: hidden;
+}
+.hero-dots {
+  position: absolute; inset: 0; opacity: .35;
+  background-image: radial-gradient(var(--border-dk) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+.hero-inner {
+  position: relative; max-width: 820px; text-align: center;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: .55rem;
+  font-family: 'Courier Prime', monospace;
+  font-size: .78rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--green);
+  background: var(--green-lt);
+  border: 1px solid var(--border-dk);
+  border-radius: 20px;
+  padding: .38rem 1rem;
+  margin-bottom: 1.75rem;
+}
+.hero-badge::before {
+  content: '';
+  width: 7px; height: 7px;
+  background: var(--green-md);
+  border-radius: 50%;
+  animation: pulse 2.2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: .4; transform: scale(.8); }
+}
+.hero-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2.6rem, 5.5vw, 4rem);
+  font-weight: 700; line-height: 1.1;
+  color: var(--text); letter-spacing: -.025em;
+  margin-bottom: 1.4rem;
+}
+.hero-title .g { color: var(--green); }
+.hero-title .o { color: var(--orange); }
+.hero-sub {
+  font-size: 1.1rem; font-weight: 400;
+  color: var(--muted); max-width: 620px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.8;
+}
+.hero-buttons {
+  display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+}
+.btn-primary {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: .95rem; font-weight: 600;
+  padding: .85rem 2rem;
+  background: var(--green); color: #fff;
+  border: none; border-radius: 5px;
+  text-decoration: none; cursor: pointer;
+  box-shadow: 0 2px 10px rgba(45,106,16,.3);
+  transition: background .18s, transform .15s, box-shadow .18s;
+}
+.btn-primary:hover {
+  background: var(--green-md);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(45,106,16,.35);
+}
+.btn-outline {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: .95rem; font-weight: 600;
+  padding: .85rem 2rem;
+  background: var(--white); color: var(--green);
+  border: 1.5px solid var(--border-dk);
+  border-radius: 5px;
+  text-decoration: none; cursor: pointer;
+  transition: border-color .18s, transform .15s;
+}
+.btn-outline:hover { border-color: var(--green); transform: translateY(-2px); }
+
+/* ── METRICS STRIP ── */
+#metrics { padding: 0 3rem; margin-top: -1.5rem; position: relative; z-index: 10; }
+.metrics-grid {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+.metric-cell {
+  padding: 2rem 1.75rem;
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+.metric-cell:last-child { border-right: none; }
+.metric-tag {
+  font-family: 'Courier Prime', monospace;
+  font-size: .72rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; margin-bottom: .55rem;
+}
+.tag-g { color: var(--green); }
+.tag-o { color: var(--orange); }
+.tag-b { color: var(--blue); }
+.tag-gd { color: var(--gold); }
+.metric-number {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.8rem; font-weight: 700;
+  line-height: 1; color: var(--text); margin-bottom: .35rem;
+}
+.metric-label { font-size: .82rem; color: var(--muted); line-height: 1.45; }
+.metric-bar { position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.bar-g  { background: var(--green); }
+.bar-o  { background: var(--orange); }
+.bar-b  { background: var(--blue); }
+.bar-gd { background: var(--gold); }
+
+/* ── SHARED SECTION STYLES ── */
+section { padding: 6rem 3rem; }
+.section-eyebrow {
+  font-family: 'Courier Prime', monospace;
+  font-size: .78rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--green);
+  margin-bottom: .8rem;
+}
+.section-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  font-weight: 700; line-height: 1.15;
+  color: var(--text); letter-spacing: -.02em;
+  margin-bottom: .9rem; max-width: 700px;
+}
+.section-body {
+  font-size: 1rem; color: var(--muted);
+  max-width: 620px; line-height: 1.8;
+  margin-bottom: 3rem;
+}
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+
+/* ── FRAMEWORK / LOGIC MODEL ── */
+#framework { background: var(--off-white); }
+.logic-model {
+  display: grid; grid-template-columns: repeat(5,1fr);
+  border: 1.5px solid var(--border);
+  border-radius: 10px; overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 3rem;
+}
+.logic-col {
+  background: var(--white);
+  padding: 1.6rem 1.25rem;
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+.logic-col:last-child { border-right: none; }
+.logic-head {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: .75rem; font-weight: 700; letter-spacing: .07em;
+  text-transform: uppercase; padding-bottom: .75rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid;
+}
+.lh-g { color: var(--green); border-color: var(--green); }
+.lh-o { color: var(--orange); border-color: var(--orange); }
+.lh-b { color: var(--blue); border-color: var(--blue); }
+.lh-gd { color: var(--gold); border-color: var(--gold); }
+.lh-t  { color: var(--teal); border-color: var(--teal); }
+.logic-item {
+  font-family: 'Courier Prime', monospace;
+  font-size: .77rem; line-height: 1.65;
+  color: var(--muted-lt);
+  padding: .3rem 0;
+  border-bottom: 1px solid var(--surface);
+}
+.logic-item:last-child { border-bottom: none; }
+.logic-item strong { color: var(--text-md); font-weight: 700; }
+.logic-arrow {
+  position: absolute; right: -13px; top: 50%;
+  transform: translateY(-50%);
+  width: 26px; height: 26px;
+  background: var(--green-lt);
+  border: 1.5px solid var(--border-dk);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .72rem; color: var(--green); font-weight: 700;
+  z-index: 2;
+}
+
+/* ── NOVEL METRICS ── */
+#novel { background: var(--white); }
+.novel-grid {
+  display: grid; grid-template-columns: repeat(2,1fr);
+  gap: 1.5rem;
+}
+.novel-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  transition: box-shadow .25s, transform .25s;
+}
+.novel-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.novel-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; bottom: 0; width: 4px;
+  border-radius: 10px 0 0 10px;
+}
+.nc-g::before { background: var(--green); }
+.nc-o::before { background: var(--orange); }
+.nc-b::before { background: var(--blue); }
+.nc-t::before { background: var(--teal); }
+.novel-num {
+  position: absolute; top: 1.25rem; right: 1.5rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 3.5rem; font-weight: 700;
+  opacity: .06; color: var(--text); line-height: 1;
+}
+.novel-tag {
+  font-family: 'Courier Prime', monospace;
+  font-size: .72rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; margin-bottom: .65rem;
+}
+.nc-g .novel-tag { color: var(--green); }
+.nc-o .novel-tag { color: var(--orange); }
+.nc-b .novel-tag { color: var(--blue); }
+.nc-t .novel-tag { color: var(--teal); }
+.novel-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.2rem; font-weight: 700;
+  color: var(--text); margin-bottom: .6rem;
+  letter-spacing: -.01em;
+}
+.novel-formula {
+  font-family: 'Courier Prime', monospace;
+  font-size: .86rem; line-height: 1.7;
+  color: var(--text-md);
+  background: var(--off-white);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: .8rem 1rem;
+  margin: .85rem 0;
+}
+.fv-g { color: var(--green); font-weight: 700; }
+.fv-o { color: var(--orange); font-weight: 700; }
+.fv-b { color: var(--blue); font-weight: 700; }
+.fv-t { color: var(--teal); font-weight: 700; }
+.formula-note { font-size: .78rem; color: var(--muted-lt); }
+.novel-desc { font-size: .9rem; color: var(--muted); line-height: 1.7; }
+.novel-cios {
+  display: inline-block; margin-top: 1rem;
+  font-family: 'Courier Prime', monospace;
+  font-size: .72rem; font-weight: 700; letter-spacing: .06em;
+  padding: .3rem .75rem;
+  border-radius: 4px;
+}
+.nc-g .novel-cios { background: var(--green-lt); color: var(--green); border: 1px solid var(--border-dk); }
+.nc-o .novel-cios { background: var(--orange-lt); color: var(--orange); border: 1px solid #F0C090; }
+.nc-b .novel-cios { background: var(--blue-lt); color: var(--blue); border: 1px solid #B0CDE8; }
+.nc-t .novel-cios { background: var(--teal-lt); color: var(--teal); border: 1px solid #90D4C0; }
+
+/* ── STATISTICAL TESTS ── */
+#stats { background: var(--off-white); }
+.stats-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 1.25rem;
+}
+.stat-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 1.75rem;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow .22s;
+}
+.stat-card:hover { box-shadow: var(--shadow-md); }
+.stat-icon {
+  font-family: 'Courier Prime', monospace;
+  font-size: .75rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--green);
+  margin-bottom: .85rem;
+  padding-bottom: .6rem;
+  border-bottom: 1.5px solid var(--green-lt);
+}
+.stat-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem; font-weight: 700;
+  color: var(--text); margin-bottom: .5rem;
+}
+.stat-desc { font-size: .88rem; color: var(--muted); line-height: 1.65; margin-bottom: 1rem; }
+.stat-formula {
+  font-family: 'Courier Prime', monospace;
+  font-size: .82rem; line-height: 1.7;
+  color: var(--text-md);
+  background: var(--green-xlt);
+  border-left: 3px solid var(--green);
+  border-radius: 0 5px 5px 0;
+  padding: .65rem .9rem;
+}
+.stat-formula .fv { color: var(--green); font-weight: 700; }
+
+/* ── ARCHITECTURE ── */
+#architecture { background: var(--white); }
+.arch-split {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 4rem; align-items: center;
+}
+.arch-stat-row {
+  display: flex; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap;
+}
+.arch-stat .n {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.4rem; font-weight: 700;
+  color: var(--green); line-height: 1;
+}
+.arch-stat .l { font-size: .78rem; color: var(--muted); margin-top: .2rem; }
+.arch-desc { font-size: .95rem; color: var(--muted); line-height: 1.75; margin-bottom: 1.5rem; }
+.tag-list { display: flex; flex-wrap: wrap; gap: .5rem; }
+.tag {
+  font-family: 'Courier Prime', monospace;
+  font-size: .74rem; font-weight: 700; letter-spacing: .04em;
+  padding: .3rem .75rem;
+  background: var(--green-lt);
+  color: var(--green);
+  border: 1px solid var(--border-dk);
+  border-radius: 4px;
+}
+.arch-diagram {
+  background: var(--off-white);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
+}
+.arch-diagram-title {
+  font-family: 'Courier Prime', monospace;
+  font-size: .72rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 1.25rem;
+}
+.arch-row {
+  display: flex; align-items: center; gap: .75rem;
+  padding: .65rem .85rem;
+  border-radius: 6px;
+  margin-bottom: .4rem;
+  color: var(--text-md);
+  font-family: 'Inter', sans-serif;
+  font-size: .88rem;
+  background: var(--white);
+  border: 1px solid var(--border);
+  transition: border-color .18s;
+}
+.arch-row:hover { border-color: var(--green); }
+.arch-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+.dot-b  { background: var(--blue); }
+.dot-o  { background: var(--orange); }
+.dot-bk { background: #555; }
+.dot-g  { background: var(--green); }
+.arch-layer { font-size: .75rem; color: var(--muted-lt); margin-left: auto; letter-spacing: .04em; }
+.arch-note {
+  margin-top: 1.25rem; padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  font-family: 'Courier Prime', monospace;
+  font-size: .76rem; color: var(--muted); line-height: 1.6;
+}
+
+/* ── RESEARCH DESIGN ── */
+#research { background: var(--off-white); }
+.design-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1.5px solid var(--border);
+  border-radius: 10px; overflow: hidden;
+  margin-bottom: 2.5rem;
+  box-shadow: var(--shadow-sm);
+}
+.design-cell {
+  background: var(--white);
+  padding: 1.75rem;
+}
+.design-label {
+  font-family: 'Courier Prime', monospace;
+  font-size: .72rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--green);
+  margin-bottom: .5rem;
+}
+.design-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.05rem; font-weight: 700;
+  color: var(--text); margin-bottom: .4rem;
+}
+.design-note { font-size: .86rem; color: var(--muted); line-height: 1.6; }
+.rq-box {
+  background: var(--green-lt);
+  border: 1.5px solid var(--border-dk);
+  border-left: 4px solid var(--green);
+  border-radius: 6px;
+  padding: 1.75rem 2rem;
+}
+.rq-label {
+  font-family: 'Courier Prime', monospace;
+  font-size: .72rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--green);
+  margin-bottom: .75rem;
+}
+.rq-text {
+  font-family: 'Inter', sans-serif;
+  font-size: .98rem; font-style: italic;
+  color: var(--text-md); line-height: 1.75;
+}
+
+/* ── CTA ── */
+#contact {
+  background: var(--green);
+  color: #fff; text-align: center;
+}
+.cta-inner { max-width: 660px; margin: 0 auto; }
+.cta-eyebrow {
+  font-family: 'Courier Prime', monospace;
+  font-size: .78rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: rgba(255,255,255,.65);
+  margin-bottom: .85rem;
+}
+.cta-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 700; line-height: 1.15;
+  color: #fff; letter-spacing: -.02em;
+  margin-bottom: 1rem;
+}
+.cta-title span { color: #C0DD97; }
+.cta-sub { font-size: 1rem; color: rgba(255,255,255,.78); margin-bottom: 2rem; line-height: 1.75; }
+.cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2.5rem; }
+.btn-white {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: .95rem; font-weight: 600;
+  padding: .85rem 2rem;
+  background: #fff; color: var(--green);
+  border: none; border-radius: 5px;
+  text-decoration: none; cursor: pointer;
+  box-shadow: 0 2px 12px rgba(0,0,0,.15);
+  transition: transform .15s, box-shadow .18s;
+}
+.btn-white:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,.2); }
+.btn-white-outline {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: .95rem; font-weight: 600;
+  padding: .85rem 2rem;
+  background: transparent; color: #fff;
+  border: 1.5px solid rgba(255,255,255,.45);
+  border-radius: 5px;
+  text-decoration: none; cursor: pointer;
+  transition: border-color .18s, transform .15s;
+}
+.btn-white-outline:hover { border-color: #fff; transform: translateY(-2px); }
+.cta-note {
+  font-family: 'Courier Prime', monospace;
+  font-size: .8rem; color: rgba(255,255,255,.55);
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,.2);
+  line-height: 1.7;
+}
+.cta-note a { color: rgba(255,255,255,.75); text-decoration: none; }
+
+/* ── FOOTER ── */
+footer {
+  padding: 1.75rem 3rem;
+  background: var(--off-white);
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+}
+.footer-brand {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: .88rem; font-weight: 600; color: var(--muted);
+}
+.footer-brand span { color: var(--green); }
+.footer-tags { display: flex; gap: .6rem; flex-wrap: wrap; }
+.footer-tag {
+  font-family: 'Courier Prime', monospace;
+  font-size: .72rem; color: var(--muted);
+  padding: .25rem .65rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: var(--white);
+}
+.footer-copy { font-size: .78rem; color: var(--muted-lt); font-family: 'Courier Prime', monospace; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { padding: .9rem 1.5rem; }
+  .nav-links { display: none; }
+  section { padding: 4rem 1.5rem; }
+  #metrics { padding: 0 1.5rem; }
+  .metrics-grid { grid-template-columns: repeat(2,1fr); }
+  .logic-model { grid-template-columns: 1fr; }
+  .logic-arrow { display: none; }
+  .novel-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: 1fr; }
+  .arch-split { grid-template-columns: 1fr; }
+  .design-grid { grid-template-columns: 1fr; }
+  footer { flex-direction: column; align-items: flex-start; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">CIOS <span>·</span> SGPBL Research</div>
+  <ul class="nav-links">
+    <li><a href="#framework">Framework</a></li>
+    <li><a href="#novel">Novel Metrics</a></li>
+    <li><a href="#stats">Statistics</a></li>
+    <li><a href="#architecture">Architecture</a></li>
+    <li><a href="#research">Research Design</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Request Paper</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-dots"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">IEEE · Serious Game-Based PBL · Impact Assessment</div>
+    <h1 class="hero-title">
+      Community Intelligence<br>
+      <span class="g">Measured.</span>
+      <span class="o">Validated.</span>
+      Published.
+    </h1>
+    <p class="hero-sub">The Community Intelligence Operating System (CIOS) is a 60-database, 10-layer research platform producing IEEE-grade evidence for Serious Game-Based Project-Based Learning impact in real CE Zone communities.</p>
+    <div class="hero-buttons">
+      <a href="#novel" class="btn-primary">Explore Novel Metrics →</a>
+      <a href="#research" class="btn-outline">Research Design</a>
+    </div>
+  </div>
+</section>
+
+<!-- METRICS STRIP -->
+<div id="metrics">
+  <div class="metrics-grid">
+    <div class="metric-cell">
+      <div class="metric-bar bar-g"></div>
+      <div class="metric-tag tag-g">Databases</div>
+      <div class="metric-number"><span class="count-up" data-target="60">0</span></div>
+      <div class="metric-label">Relational intelligence layers across 10 CIOS tiers</div>
+    </div>
+    <div class="metric-cell">
+      <div class="metric-bar bar-o"></div>
+      <div class="metric-tag tag-o">SkillCards</div>
+      <div class="metric-number"><span class="count-up" data-target="85">0</span></div>
+      <div class="metric-label">Validated game assets across 6 Achievement Domains ($10–$100 CV)</div>
+    </div>
+    <div class="metric-cell">
+      <div class="metric-bar bar-b"></div>
+      <div class="metric-tag tag-b">Service Goals</div>
+      <div class="metric-number"><span class="count-up" data-target="322">0</span></div>
+      <div class="metric-label">Evidence-based proof-of-work requirements tracked per participant</div>
+    </div>
+    <div class="metric-cell">
+      <div class="metric-bar bar-gd"></div>
+      <div class="metric-tag tag-gd">Novel Metrics</div>
+      <div class="metric-number"><span class="count-up" data-target="4">0</span></div>
+      <div class="metric-label">Original IEEE contributions absent from existing SGPBL literature</div>
+    </div>
+  </div>
+</div>
+
+<!-- FRAMEWORK -->
+<section id="framework">
+  <div class="section-eyebrow">Logic Model</div>
+  <h2 class="section-title">From game play to community impact — a complete evidence chain</h2>
+  <p class="section-body">CIOS implements the full SGPBL logic model across five stages. Every stage produces structured data in a named CIOS database — creating an unbroken evidence chain from participant game session to documented community condition change.</p>
+
+  <div class="logic-model">
+    <div class="logic-col">
+      <div class="logic-head lh-g">Inputs</div>
+      <div class="logic-item"><strong>DB #20</strong> Skills Self-Assessment baseline</div>
+      <div class="logic-item"><strong>DB #8</strong> CE Zone condition score T₀</div>
+      <div class="logic-item"><strong>DB #20a</strong> SIMS motivation baseline</div>
+      <div class="logic-item"><strong>DB #11</strong> JEM Team composition</div>
+      <div class="logic-item"><strong>DB #10</strong> Dilemma complexity rating</div>
+      <div class="logic-arrow">→</div>
+    </div>
+    <div class="logic-col">
+      <div class="logic-head lh-o">Activities</div>
+      <div class="logic-item"><strong>DB #29</strong> Card game sessions logged</div>
+      <div class="logic-item"><strong>DB #27</strong> SIP activities (timestamped)</div>
+      <div class="logic-item"><strong>DB #22</strong> Evidence records generated</div>
+      <div class="logic-item"><strong>DB #47</strong> Stakeholder conversations</div>
+      <div class="logic-item"><strong>DB #18</strong> SkillCards earned</div>
+      <div class="logic-arrow">→</div>
+    </div>
+    <div class="logic-col">
+      <div class="logic-head lh-b">Outputs</div>
+      <div class="logic-item"><strong>DB #18</strong> SkillCards per domain (count)</div>
+      <div class="logic-item"><strong>DB #20</strong> Total CV accumulated</div>
+      <div class="logic-item"><strong>DB #27</strong> SIP completion rate</div>
+      <div class="logic-item"><strong>DB #58</strong> Skillcoin at 30/40/30</div>
+      <div class="logic-item"><strong>DB #22</strong> Evidence record count</div>
+      <div class="logic-arrow">→</div>
+    </div>
+    <div class="logic-col">
+      <div class="logic-head lh-gd">Outcomes</div>
+      <div class="logic-item"><strong>DB #23</strong> TRU score T₀→T₁ delta</div>
+      <div class="logic-item"><strong>DB #20</strong> Domain ⟨g⟩ per participant</div>
+      <div class="logic-item"><strong>DB #20a</strong> SIMS SDI change</div>
+      <div class="logic-item"><strong>DB #27</strong> Decision Revision Index</div>
+      <div class="logic-item"><strong>DB #20</strong> PV Conversion Rate</div>
+      <div class="logic-arrow">→</div>
+    </div>
+    <div class="logic-col">
+      <div class="logic-head lh-t">Impact</div>
+      <div class="logic-item"><strong>DB #8</strong> CE Zone score T₀→T₁</div>
+      <div class="logic-item"><strong>DB #46</strong> SROI ratio</div>
+      <div class="logic-item"><strong>DB #45</strong> 8-Capital ECIS</div>
+      <div class="logic-item"><strong>DB #10</strong> Dilemma resolution rate</div>
+      <div class="logic-item"><strong>DB #55</strong> Employer placements</div>
+    </div>
+  </div>
+</section>
+
+<!-- NOVEL METRICS -->
+<section id="novel">
+  <div class="section-eyebrow">Original Contributions</div>
+  <h2 class="section-title">Four metrics not present in existing SGPBL literature</h2>
+  <p class="section-body">These four metrics are CIOS's original theoretical contribution to IEEE. No prior publication combines a monetized skill assessment, a passive-to-active activation measure, a community resolution rate, and an analog telemetry index in a single validated framework.</p>
+
+  <div class="novel-grid">
+    <div class="novel-card nc-g">
+      <div class="novel-num">01</div>
+      <div class="novel-tag">Novel Metric 01</div>
+      <div class="novel-name">Contribution Value Growth Rate</div>
+      <div class="novel-formula">
+        <span class="fv-g">CV_rate</span> = (CV_T₁ − CV_T₀) / Curriculum_days<br><br>
+        CV_T = Σ(Have/Use_domain × $CV_domain)<br>
+        <span class="formula-note">Domain weights: $10 · $20 · $30 · $40 · $50 · $100</span>
+      </div>
+      <div class="novel-desc">Converts learning gain into economic value at the individual level using pre-calibrated, game-validated skill values. No existing SGPBL study attaches monetized weights to a validated skill assessment instrument — making this a direct bridge between educational measurement and economic impact reporting.</div>
+      <div class="novel-cios">CIOS: DB #20 · DB #58 · DB #45</div>
+    </div>
+
+    <div class="novel-card nc-o">
+      <div class="novel-num">02</div>
+      <div class="novel-tag">Novel Metric 02</div>
+      <div class="novel-name">Potential Value Conversion Rate</div>
+      <div class="novel-formula">
+        <span class="fv-o">PV_conv</span> = (PV_T₀ − PV_T₁) / PV_T₀<br><br>
+        PV = Σ(Have/Didn't Use × $CV_domain)<br>
+        <span class="formula-note">Measures passive → active skill activation</span>
+      </div>
+      <div class="novel-desc">Measures the curriculum's success at activating passive skills — those possessed but not yet applied — into active contribution. The distinction between skill possession and skill application is unique to the CoD Skills Self-Assessment and cannot be replicated by any other SGPBL framework currently in the literature.</div>
+      <div class="novel-cios">CIOS: DB #20 T₀/T₁ delta · Domain surveys</div>
+    </div>
+
+    <div class="novel-card nc-b">
+      <div class="novel-num">03</div>
+      <div class="novel-tag">Novel Metric 03</div>
+      <div class="novel-name">Stakeholder's Dilemma Resolution Rate</div>
+      <div class="novel-formula">
+        <span class="fv-b">SDRR</span> = Dilemmas_Resolved / Dilemmas_Initiated × 100<br><br>
+        Resolved: Status="Resolved" ∧<br>
+        CE_Zone_score_T₁ &gt; CE_Zone_score_T₀<br>
+        <span class="formula-note">Requires community-level evidence confirmation</span>
+      </div>
+      <div class="novel-desc">Measures whether the community problem was actually solved — not just whether participants learned something about it. Links individual learning outcomes to documented socio-economic change in a specific geographic location. No existing PBL assessment includes a community problem resolution rate as a primary dependent variable.</div>
+      <div class="novel-cios">CIOS: DB #10 · DB #8 · DB #9 · DB #22</div>
+    </div>
+
+    <div class="novel-card nc-t">
+      <div class="novel-num">04</div>
+      <div class="novel-tag">Novel Metric 04</div>
+      <div class="novel-name">Decision Revision Index</div>
+      <div class="novel-formula">
+        <span class="fv-t">DRI</span> = SIP_Revisions / Total_SIP_Activities<br><br>
+        Revision: Plan/Design revised after<br>
+        Coordinate/Evaluate phase begins<br>
+        <span class="formula-note">Analog telemetry for physical serious games</span>
+      </div>
+      <div class="novel-desc">An analog telemetry measure for PBL adaptive expertise that does not require digital game infrastructure — applicable to physical serious games and hybrid PBL formats. Captures when participants change course in response to new evidence, stakeholder feedback, or changed conditions: the hallmark of engineering-grade problem-solving competency.</div>
+      <div class="novel-cios">CIOS: DB #27 SIP Activities · Revision fields</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="section-eyebrow">Statistical Analysis</div>
+  <h2 class="section-title">IEEE-standard calculations built into the CIOS output layer</h2>
+  <p class="section-body">CIOS Layer 7 (Impact) and Layer 8 (Reports) produce the structured datasets required for each statistical test below. No external data extraction is needed — every formula draws directly from named CIOS database fields.</p>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon">MANOVA</div>
+      <div class="stat-name">Multivariate Analysis of Variance</div>
+      <div class="stat-desc">Compares CoD SGPBL vs. control across all six domain scores, SIMS subscales, and community impact measures simultaneously — controlling for Type I error inflation across multiple dependent variables.</div>
+      <div class="stat-formula">
+        Λ = Wilks' Lambda (overall effect)<br>
+        <span class="fv">η²</span> = Partial eta squared (effect size)<br>
+        Source: DB #20 × 6 domains · DB #20a SIMS
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">Normalized Gain ⟨g⟩</div>
+      <div class="stat-name">Hake Learning Gain (1998)</div>
+      <div class="stat-desc">Assesses improvement while controlling for baseline knowledge across all six Achievement Domains. Enables cross-domain and cross-CE Zone comparison standardized to entry level.</div>
+      <div class="stat-formula">
+        <span class="fv">⟨g⟩</span> = (%Post − %Pre) / (100 − %Pre)<br>
+        Low &lt;0.30 · Medium 0.30–0.70 · High ≥0.70<br>
+        Source: DB #20 T₀ and T₁ per domain
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">Cohen's d</div>
+      <div class="stat-name">Effect Size</div>
+      <div class="stat-desc">Calculates the magnitude of the CoD SGPBL intervention relative to pooled standard deviation. SGPBL benchmark: d = 0.46–0.85. Expected Domain 6 result: d ≥ 0.80 due to high U-score baseline in CE Zone participants.</div>
+      <div class="stat-formula">
+        <span class="fv">d</span> = (M_post − M_pre) / SD_pooled<br>
+        SD_pooled = √[(SD_pre² + SD_post²) / 2]<br>
+        Source: DB #20 domain Have/Use scores
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">SIMS · SDI</div>
+      <div class="stat-name">Situational Motivation Scale</div>
+      <div class="stat-desc">Guay et al. (2000) 16-item validated instrument across four subscales: Intrinsic Motivation, Identified Regulation, External Regulation, Amotivation. Administered at T₀ and T₁ via CIOS DB #20a.</div>
+      <div class="stat-formula">
+        <span class="fv">SDI</span> = 2(IM) + (IR) − (ER) − 2(AM)<br>
+        Higher SDI = more self-determined motivation<br>
+        Source: DB #20a Motivation Assessment
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">SROI</div>
+      <div class="stat-name">Social Return on Investment</div>
+      <div class="stat-desc">Monetizes Eight Capital gains against total program investment. CoD SGPBL target: ≥4.0× SROI. The CV Growth Rate feeds the SROI numerator with a novel skill-activation economic valuation component unavailable in other frameworks.</div>
+      <div class="stat-formula">
+        <span class="fv">SROI</span> = Total_Social_Value / Total_Investment<br>
+        Benchmark: Community ed 2.1–3.4× · WFD 3.5–6.2×<br>
+        Source: DB #46 · DB #45 · DB #55 · DB #58
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">SEM</div>
+      <div class="stat-name">Structural Equation Modeling</div>
+      <div class="stat-desc">Maps how CoD SGPBL components drive engagement and subsequent learning. Tests the causal pathway: game engagement → motivation → skill acquisition → community impact → economic value.</div>
+      <div class="stat-formula">
+        CFI ≥ 0.95 · RMSEA ≤ 0.06 · SRMR ≤ 0.08<br>
+        Path: DB#27→DB#20a→DB#20→DB#8→DB#46<br>
+        Source: All CIOS Layer 4, 5, 7 databases
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="architecture">
+  <div class="arch-split">
+    <div>
+      <div class="section-eyebrow">CIOS Platform</div>
+      <h2 class="section-title">60-database research infrastructure across 10 intelligence layers</h2>
+      <div class="arch-stat-row">
+        <div class="arch-stat"><div class="n">60</div><div class="l">Databases</div></div>
+        <div class="arch-stat"><div class="n">10</div><div class="l">Layers</div></div>
+        <div class="arch-stat"><div class="n">4</div><div class="l">Clusters</div></div>
+        <div class="arch-stat"><div class="n">85</div><div class="l">Game assets</div></div>
+      </div>
+      <div class="arch-desc">Every CIOS database is a named measurement instrument. The platform produces IEEE-ready datasets without additional data extraction — structured output flows from Layer 7 (Impact Analysis) and Layer 8 (Reports) directly into statistical analysis pipelines. All CE Zone instances run identical architecture enabling federated multi-site comparison.</div>
+      <div class="tag-list">
+        <span class="tag">L0 · Pathways</span>
+        <span class="tag">L2 · Conditions</span>
+        <span class="tag">L3 · Stakeholders</span>
+        <span class="tag">L4 · Capabilities</span>
+        <span class="tag">L5 · Projects</span>
+        <span class="tag">L6 · Evidence</span>
+        <span class="tag">L7 · Impact</span>
+        <span class="tag">L8 · Reports</span>
+        <span class="tag">L9 · Strategy</span>
+        <span class="tag">CE · Economy</span>
+      </div>
+    </div>
+    <div class="arch-diagram">
+      <div class="arch-diagram-title">Entity governance clusters</div>
+      <div class="arch-row">
+        <div class="arch-dot dot-b"></div>
+        <span>CDRC + NSSBI</span>
+        <span class="arch-layer">Platform Intelligence</span>
+      </div>
+      <div class="arch-row">
+        <div class="arch-dot dot-o"></div>
+        <span>NSOTA / NSYEP</span>
+        <span class="arch-layer">Training Engine</span>
+      </div>
+      <div class="arch-row">
+        <div class="arch-dot dot-o"></div>
+        <span>STEM Direct Cooperative</span>
+        <span class="arch-layer">Economic Governance</span>
+      </div>
+      <div class="arch-row">
+        <div class="arch-dot dot-bk"></div>
+        <span>The Change eXchange</span>
+        <span class="arch-layer">Regulated Capital</span>
+      </div>
+      <div class="arch-row">
+        <div class="arch-dot dot-g"></div>
+        <span>FreshBites · ATWOOD</span>
+        <span class="arch-layer">Applied Learning</span>
+      </div>
+      <div class="arch-row">
+        <div class="arch-dot dot-g"></div>
+        <span>Pop Shop · CoD Media</span>
+        <span class="arch-layer">Creative Economy</span>
+      </div>
+      <div class="arch-note">
+        All 60 databases identical across CE Zone instances<br>
+        Enables federated multi-site comparative analysis
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH DESIGN -->
+<section id="research">
+  <div class="section-eyebrow">Study Design</div>
+  <h2 class="section-title">Quasi-experimental, multi-site, longitudinal</h2>
+  <p class="section-body">Each CE Zone operating identical 60-database CIOS architecture enables cross-community comparison at a scale unavailable to single-site SGPBL studies. Every site produces structurally identical datasets — making meta-analysis and network effect measurement possible within a single research cycle.</p>
+
+  <div class="design-grid">
+    <div class="design-cell">
+      <div class="design-label">Design</div>
+      <div class="design-value">Quasi-experimental</div>
+      <div class="design-note">Pre-test / post-test with control group. Experimental: full BFYF curriculum (Sections 1–9). Control: comparable service-learning without CoD SGPBL framework.</div>
+    </div>
+    <div class="design-cell">
+      <div class="design-label">Sample</div>
+      <div class="design-value">N ≥ 30 per CE Zone</div>
+      <div class="design-note">Minimum 3 CE Zones for multi-site comparison. IEEE publication standard. Longitudinal span: Phase I (1–2 wks) + Phase II (2–4 wks) + Phase III (3–6 months).</div>
+    </div>
+    <div class="design-cell">
+      <div class="design-label">Instruments</div>
+      <div class="design-value">6 validated surveys</div>
+      <div class="design-note">Skills Self-Assessment (6 domain surveys) + SIMS motivation scale (16 items, 4 subscales) + CE Zone Assessment (condition scoring 0–100) + TRU Capability Profile.</div>
+    </div>
+    <div class="design-cell">
+      <div class="design-label">Primary DVs</div>
+      <div class="design-value">Domain Have/Use scores</div>
+      <div class="design-note">Six Achievement Domain scores (T₀ and T₁) + TRU Capability Score delta + SIMS SDI change + CE Zone condition score change + SROI ratio pre/post.</div>
+    </div>
+    <div class="design-cell">
+      <div class="design-label">Novel DVs</div>
+      <div class="design-value">4 original metrics</div>
+      <div class="design-note">CV Growth Rate · PV Conversion Rate · Stakeholder's Dilemma Resolution Rate (SDRR) · Decision Revision Index (DRI). Not present in existing SGPBL literature.</div>
+    </div>
+    <div class="design-cell">
+      <div class="design-label">Analysis</div>
+      <div class="design-value">MANOVA · SEM · Cohen's d</div>
+      <div class="design-note">MANOVA (multivariate), ANOVA (cross-site), paired t-test (within group), ⟨g⟩ normalized gain, Cohen's d effect size, SEM path modeling, SROI calculation.</div>
+    </div>
+  </div>
+
+  <div class="rq-box">
+    <div class="rq-label">Research Question</div>
+    <div class="rq-text">"Does the Community On Demand Serious Game-Based Project-Based Learning (CoD SGPBL) framework produce statistically significant improvements in civic entrepreneurship competency (TRU Capability Scores), community problem-solving efficacy (Stakeholder's Dilemma Resolution Rate), and socio-economic impact (CE Zone condition score change and SROI) when compared to traditional service-learning instruction?"</div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contact">
+  <div class="cta-inner">
+    <div class="cta-eyebrow">IEEE · NEXT Steps Youth Entrepreneur Program</div>
+    <h2 class="cta-title">Ready to measure what <span>actually changes</span> in a community?</h2>
+    <p class="cta-sub">CIOS is the first SGPBL research infrastructure connecting individual learning outcomes to documented community condition change — with four novel metrics, six validated instruments, and a federated multi-site dataset that grows with every CE Zone enrolled.</p>
+    <div class="cta-buttons">
+      <a href="mailto:research@nextstepsyep.org" class="btn-white">Request Research Paper →</a>
+      <a href="https://nextstepsyep.org" target="_blank" class="btn-white-outline">NEXT Steps YEP</a>
+    </div>
+    <div class="cta-note">
+      Research infrastructure: CIOS v1.0 · Notion · CDRC · NSSBI &nbsp;·&nbsp;
+      IEEE submission: Transactions on Learning Technologies<br>
+      Data governance: The Change eXchange / CDFI · IRB protocol required for research cohorts
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">CIOS <span>·</span> SGPBL &nbsp;·&nbsp; Community Intelligence Operating System</div>
+  <div class="footer-tags">
+    <span class="footer-tag">IEEE TLT</span>
+    <span class="footer-tag">SGPBL</span>
+    <span class="footer-tag">PBL Research</span>
+    <span class="footer-tag">CE Zone</span>
+    <span class="footer-tag">CoD BFYF</span>
+  </div>
+  <div class="footer-copy">© 2026 NEXT Steps Youth Entrepreneur Program · NEXT Steps Small Business Incubator</div>
+</footer>
+
+<script>
+// Counter animation
+const counters = document.querySelectorAll('.count-up');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    const target = parseInt(el.dataset.target);
+    const start = performance.now();
+    const dur = 1400;
+    const tick = now => {
+      const p = Math.min((now - start) / dur, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(ease * target);
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+    obs.unobserve(el);
+  });
+}, { threshold: 0.3 });
+counters.forEach(c => obs.observe(c));
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.novel-card, .stat-card, .design-cell, .logic-col, .arch-row');
+const rObs = new IntersectionObserver(entries => {
+  entries.forEach((entry, i) => {
+    if (!entry.isIntersecting) return;
+    setTimeout(() => {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }, i * 70);
+    rObs.unobserve(entry.target);
+  });
+}, { threshold: 0.08 });
+reveals.forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(14px)';
+  el.style.transition = 'opacity .45s ease, transform .45s ease';
+  rObs.observe(el);
+});
+</script>
+</body>
+</html>
